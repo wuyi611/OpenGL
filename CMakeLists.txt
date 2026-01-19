@@ -1,21 +1,40 @@
-cmake_minimum_required(VERSION 3.16)
+﻿cmake_minimum_required(VERSION 3.16)
 project(OpenGL LANGUAGES CXX C) # 增加 C 语言支持，因为 glad.c 是 C 文件
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+
 # 1. 定义源文件（包含你的代码和 GLAD 源码）
-set(SOURCES
-    src/main.cpp
-    src/main1.cpp
-    src/main2.cpp
-    src/main3.cpp
-    src/Shader.cpp
-    include/Shader.h
-    "${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glad/src/glad.c"
+# set(SOURCES
+#     src/main.cpp
+#     src/main1.cpp
+#     src/main2.cpp
+#     src/main3.cpp
+#     src/Shader.cpp
+#     #include/Shader.h
+#     "${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glad/src/glad.c"
+# )
+
+#add_executable(${PROJECT_NAME} ${SOURCES})
+
+file(GLOB_RECURSE HEADER_FILES "include/*.h" "include/*.hpp")
+file(GLOB_RECURSE SRC_FILES "src/*.cpp" "thirdparty/*.c")
+file(GLOB_RECURSE RES_FILES "resources/*")
+
+
+
+# 2. 将它们一起加入到项目中
+add_executable(${PROJECT_NAME}
+    ${SRC_FILES}
+    ${HEADER_FILES}
+    ${RES_FILES}
 )
 
-add_executable(${PROJECT_NAME} ${SOURCES})
+target_compile_definitions(${PROJECT_NAME} PRIVATE
+    PROJECT_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}"
+)
+
 
 # 2. 头文件路径 (包含你自己和第三方库的)
 target_include_directories(${PROJECT_NAME} PRIVATE
