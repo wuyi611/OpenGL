@@ -1,4 +1,4 @@
-﻿cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.16)
 project(OpenGL LANGUAGES CXX C) # 增加 C 语言支持，因为 glad.c 是 C 文件
 
 set(CMAKE_CXX_STANDARD 17)
